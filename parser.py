@@ -1,7 +1,7 @@
 import json
 
 
-def read_data(filename):
+def read_api_data(filename):
     """
     Read the API data from the file
     :param filename: The name of the file to read
@@ -74,7 +74,7 @@ def main():
     :return: None
     """
     # Read the API data from the file
-    api_records_json = read_data('data/api.txt')
+    api_records_json = read_api_data('data/api.txt')
 
     # Print the JSON object
     print(api_records_json)
