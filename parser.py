@@ -106,19 +106,36 @@ def read_api_data(filename):
     return api_records
 
 
+def create_matrix(mashup_records, api_records):
+    matrix = [[0 for x in range(len(api_records))] for y in range(len(mashup_records))]
+    for i in range(len(mashup_records)):
+        mashup = mashup_records[i]
+        for j in range(len(api_records)):
+            api = api_records[j]
+            mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
+            if api['name'] in mashup_api_names:
+                matrix[i][j] = 1
+                # print("Mashup: " + mashup['title'] + " API: " + api['title'])
+                # print(i, j)
+
+    return matrix
+
+
 def main():
     """
     Main function
     :return: None
     """
     # Read the API data from the file
-    api_records_json = read_api_data('data/api.txt')
+    api_records = read_api_data('data/api.txt')
+    api_records_json = json.dumps(api_records)
 
-    # Print the JSON object
-    print(api_records_json)
+    mashup_records = read_mashup_data('data/mashup.txt')
+    mashup_records_json = json.dumps(mashup_records)
 
-    mashup_records_json = read_mashup_data('data/mashup.txt')
-    print(mashup_records_json)
+    mat = create_matrix(mashup_records, api_records)
+
+    print(mat[7391][3888])
 
 
 if __name__ == '__main__':

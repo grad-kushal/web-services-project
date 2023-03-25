@@ -11,9 +11,11 @@ import parser
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
+
 # Load API descriptions into a list of strings
 api_descriptions = [i['description'] for i in parser.read_api_data('data/api.txt')]
 new = parser.read_api_data('data/api.txt')
+
 # Preprocess the API descriptions
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
