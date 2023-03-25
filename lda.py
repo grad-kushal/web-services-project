@@ -36,6 +36,11 @@ def preprocess(text):
 
 
 def lda_train():
+    """
+    Train the LDA model
+    :return: dictionary, tokenized_descriptions, corpus, lda_model
+    """
+
     tokenized_descriptions = [preprocess(description) for description in api_descriptions]
 
     # Create a dictionary from the tokenized descriptions
@@ -52,6 +57,15 @@ def lda_train():
 
 
 def mashup_similarity(mashup_specification, dictionary, tokenized_descriptions, lda_model, corpus):
+    """
+    Calculate the similarity between the mashup specification and the API descriptions
+    :param mashup_specification: Mashup specification
+    :param dictionary: Dictionary
+    :param tokenized_descriptions: Tokenized descriptions
+    :param lda_model: LDA model
+    :param corpus: Corpus
+    :return: None
+    """
     # Preprocess the mashup specification
     tokenized_specification = preprocess(mashup_specification)
 
