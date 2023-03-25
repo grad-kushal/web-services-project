@@ -14,7 +14,6 @@ nltk.download('wordnet')
 # Load API descriptions into a list of strings
 api_descriptions = [i['description'] for i in parser.read_api_data('data/api.txt')]
 new = parser.read_api_data('data/api.txt')
-print(api_descriptions)
 # Preprocess the API descriptions
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
@@ -60,7 +59,7 @@ def mashup_similarity(mashup_specification, dictionary, tokenized_descriptions, 
     """
     Calculate the similarity between the mashup specification and the API descriptions
     :param mashup_specification: Mashup specification
-    :param dictionary: Dictionary
+    :param dictionary: Dictionary of tokenized descriptions
     :param tokenized_descriptions: Tokenized descriptions
     :param lda_model: LDA model
     :param corpus: Corpus

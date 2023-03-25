@@ -1,6 +1,44 @@
 import json
 
 
+def read_mashup_data(filename):
+    """
+    Read the mashup data from the file
+    :param filename: The name of the file to read
+    :return: The JSON object containing the mashup data
+    """
+    with open(filename, 'r', encoding="ISO-8859-1") as f:
+        lines = f.readlines()
+
+    mashup_records = []
+
+    for line in lines:
+        fields = line.strip().split('$#$')
+        mashup_record = {
+            'id': fields[0],
+            'title': fields[1],
+            'summary': fields[2],
+            'rating': fields[3],
+            'name': fields[4],
+            'label': fields[5],
+            'author': fields[6],
+            'description': fields[7],
+            'type': fields[8],
+            'downloads': fields[9],
+            'useCount': fields[10],
+            'sampleUrl': fields[11],
+            'dateModified': fields[12],
+            'numComments': fields[13],
+            'commentsUrl': fields[14],
+            'tags': fields[15].split('###'),
+            'apis': fields[16].split('###'),
+            'updated': fields[17]
+        }
+        mashup_records.append(mashup_record)
+    # mashup_record_json = json.dumps(mashup_records)
+    return mashup_records
+
+
 def read_api_data(filename):
     """
     Read the API data from the file
@@ -78,6 +116,9 @@ def main():
 
     # Print the JSON object
     print(api_records_json)
+
+    mashup_records_json = read_mashup_data('data/mashup.txt')
+    print(mashup_records_json)
 
 
 if __name__ == '__main__':
