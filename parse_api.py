@@ -74,7 +74,7 @@ def main():
     :return: None
     """
     # Read the API data from the file
-    api_records_json = read_data('data/mashup.txt')
+    api_records_json = read_data('data/api.txt')
 
     # Print the JSON object
     print(api_records_json)

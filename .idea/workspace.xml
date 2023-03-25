@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3a867b9b-488b-4e6d-93ad-94c3026d48e7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lda.py" beforeDir="false" afterPath="$PROJECT_DIR$/lda.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parse_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/parse_api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.lda (1)">
     <configuration name="lda (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -101,8 +103,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.lda (1)" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.lda" />
       </list>
     </recent_temporary>

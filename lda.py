@@ -6,14 +6,14 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import string
 import nltk
-import main
+import parse_api
 
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 # Load API descriptions into a list of strings
-api_descriptions = [i['description'] for i in main.read_data('data/api.txt')]
-new = main.read_data('data/api.txt')
+api_descriptions = [i['description'] for i in parse_api.read_data('data/api.txt')]
+new = parse_api.read_data('data/api.txt')
 print(api_descriptions)
 # Preprocess the API descriptions
 lemmatizer = WordNetLemmatizer()
