@@ -64,8 +64,8 @@ def read_data(filename):
         }
 
         api_records.append(api_record)
-    api_records_json = json.dumps(api_records)
-    return api_records_json
+
+    return api_records
 
 
 def main():
@@ -74,7 +74,7 @@ def main():
     :return: None
     """
     # Read the API data from the file
-    api_records_json = read_data('api.txt')
+    api_records_json = read_data('data/mashup.txt')
 
     # Print the JSON object
     print(api_records_json)
