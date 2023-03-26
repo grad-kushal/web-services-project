@@ -109,10 +109,6 @@ def main():
                            "and UK  API versions."
     mashup_similarity(mashup_specification, dictionary, token, lda, corpus)
 
-    # matrix = parser.create_matrix(parser.read_api_data('data/api.txt'), parser.read_mashup_data('data/mashup.txt'))
-    #
-    # matrix_factorization = matrix_factorization(matrix)
-
 
 if __name__ == "__main__":
     main()
