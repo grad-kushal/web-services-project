@@ -78,25 +78,17 @@ def mashup_similarity(mashup_specification, dictionary, tokenized_descriptions, 
 
     # Calculate the cosine similarity between the mashup specification topic distribution
     # and the topic distributions of each API description
+    similarities = []
     for i, api_description in enumerate(api_descriptions):
         api_tokens = tokenized_descriptions[i]
         api_bow = corpus[i]
         api_topics = lda_model.get_document_topics(api_bow)
         similarity = gensim.matutils.cossim(specification_topics, api_topics)
-        print(new[i]['name'])
-        print(f"API {i + 1} similarity: {similarity}")
-
-
-def matrix_factorization(matrix, param):
-    """
-    Matrix factorization
-    :param matrix: Matrix
-    :param param: Parameter
-    :return: None
-    """
-    print(matrix)
-    print(param)
-    u
+        # print(new[i]['name'])
+        # print(f"API {i + 1} similarity: {similarity}")
+        obj = {'name': new[i]['name'], 'similarity': similarity}
+        similarities.append(obj)
+    return similarities
 
 
 def main():
@@ -107,7 +99,9 @@ def main():
     dictionary, token, corpus, lda = lda_train()
     mashup_specification = "This site is a demo to show the functionality of the shopzilla.com API. Supports the US " \
                            "and UK  API versions."
-    mashup_similarity(mashup_specification, dictionary, token, lda, corpus)
+    similarities = mashup_similarity(mashup_specification, dictionary, token, lda, corpus)
+    # mashup_similarity(mashup_specification, dictionary, token, lda, corpus)
+    print(similarities)
 
 
 if __name__ == "__main__":
