@@ -1,5 +1,5 @@
 import json
-
+import csv
 
 def read_mashup_data(filename):
     """
@@ -107,18 +107,22 @@ def read_api_data(filename):
 
 
 def create_matrix(mashup_records, api_records):
-    matrix = [[0 for x in range(len(api_records))] for y in range(len(mashup_records))]
-    for i in range(len(mashup_records)):
-        mashup = mashup_records[i]
-        for j in range(len(api_records)):
-            api = api_records[j]
-            mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
-            if api['name'] in mashup_api_names:
-                matrix[i][j] = 1
-                # print("Mashup: " + mashup['title'] + " API: " + api['title'])
-                # print(i, j)
+    data = [['mashup_id', 'api_id', 'probability']]
+    with open('example.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(data[0])
+        for i in range(len(mashup_records)):
+            mashup = mashup_records[i]
+            for j in range(len(api_records)):
+                api = api_records[j]
+                mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
+                if api['name'] in mashup_api_names:
+                    print([i,api_records.index(api),1/len(mashup_api_names)])
+                    writer.writerow([i,api_records.index(api),1/len(mashup_api_names)])
 
-    return matrix
+
+
+
 
 
 def main():
@@ -133,9 +137,9 @@ def main():
     mashup_records = read_mashup_data('data/mashup.txt')
     mashup_records_json = json.dumps(mashup_records)
 
-    mat = create_matrix(mashup_records, api_records)
+    create_matrix(mashup_records, api_records)
 
-    print(mat[7391][3888])
+
 
 
 if __name__ == '__main__':
