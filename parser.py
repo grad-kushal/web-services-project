@@ -117,8 +117,8 @@ def create_matrix(mashup_records, api_records):
                 api = api_records[j]
                 mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
                 if api['name'] in mashup_api_names:
-                    print([i,api_records.index(api),1/len(mashup_api_names)])
-                    writer.writerow([i,api_records.index(api),1/len(mashup_api_names)])
+                    print([mashup['id'],api['id'],1])
+                    writer.writerow([mashup['id'],api['id'],1])
 
 
 
