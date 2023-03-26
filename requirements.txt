@@ -1,3 +1,6 @@
-gensim
+gensim~=4.3.1
 corpora
-nltk
+nltk~=3.8.1
+numpy~=1.23.3
+pandas~=1.5.1
+scikit-learn~=1.1.2

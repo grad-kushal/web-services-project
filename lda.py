@@ -87,6 +87,18 @@ def mashup_similarity(mashup_specification, dictionary, tokenized_descriptions, 
         print(f"API {i + 1} similarity: {similarity}")
 
 
+def matrix_factorization(matrix, param):
+    """
+    Matrix factorization
+    :param matrix: Matrix
+    :param param: Parameter
+    :return: None
+    """
+    print(matrix)
+    print(param)
+    u
+
+
 def main():
     """
     Main function
@@ -96,6 +108,10 @@ def main():
     mashup_specification = "This site is a demo to show the functionality of the shopzilla.com API. Supports the US " \
                            "and UK  API versions."
     mashup_similarity(mashup_specification, dictionary, token, lda, corpus)
+
+    # matrix = parser.create_matrix(parser.read_api_data('data/api.txt'), parser.read_mashup_data('data/mashup.txt'))
+    #
+    # matrix_factorization = matrix_factorization(matrix)
 
 
 if __name__ == "__main__":

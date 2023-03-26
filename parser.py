@@ -112,11 +112,13 @@ def create_matrix(mashup_records, api_records):
         mashup = mashup_records[i]
         for j in range(len(api_records)):
             api = api_records[j]
-            mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
-            if api['name'] in mashup_api_names:
-                matrix[i][j] = 1
-                # print("Mashup: " + mashup['title'] + " API: " + api['title'])
-                # print(i, j)
+            mashup_apis = mashup['apis']
+            if mashup_apis:
+                mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
+                if api['name'] in mashup_api_names:
+                    matrix[i][j] = 1
+                    # print("Mashup: " + mashup['title'] + " API: " + api['title'])
+                    # print(i, j)
 
     return matrix
 
