@@ -142,5 +142,5 @@ Book/
 *.mat
 *.dat
 *.txt
-*.idea
+*.idea/
 
