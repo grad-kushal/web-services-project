@@ -10,7 +10,8 @@ def main():
     mashup_records = parser.read_mashup_data('data/mashup.txt')
 
     dictionary, token, corpus, lda_model = lda.lda_train()
-    mashup_specification = "I want to find a mashup that Tells Jokes"
+    mashup_specification = "This site is a demo to show the functionality of the shopzilla.com API. Supports the US " \
+                           "and UK  API versions."
     similarities = lda.mashup_similarity(mashup_specification, dictionary, token, lda_model, corpus)
     best_mashup, index = lda.get_best_mashup(similarities, mashup_records)
 
@@ -20,12 +21,12 @@ def main():
     root_mean_square_error = calculate_root_mean_square_error(matrix, predictions)
     print('Root mean square error: ' + str(root_mean_square_error))
 
-    print("Best mashup: " + best_mashup['name'])
+    print("Best similar mashup: " + best_mashup['name'])
     print("Best mashup index: " + str(index))
     result = predictions[index]
-    # for i in range(len(result)):
-    #     if result[i] > 0:
-    #         print(i, api_records[i]['name'], result[i])
+    for i in range(len(result)):
+        if result[i] > 0:
+            print(i, api_records[i]['name'], result[i])
 
 
 if __name__ == "__main__":
