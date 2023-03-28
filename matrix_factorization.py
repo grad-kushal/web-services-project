@@ -12,7 +12,7 @@ def matrix_factorization_based_collaborative_filtering(matrix):
     """
     # Convert the matrix into a numpy array
     np_matrix = np.array(matrix)
-    number_of_components = 15
+    number_of_components = 10
 
     # Perform matrix factorization
     model = NMF(n_components=number_of_components, init='random', random_state=0)

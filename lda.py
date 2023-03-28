@@ -106,3 +106,21 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def get_best_mashup(similarities, mashup_records):
+    """
+    Get the best mashup based on the similarity
+    :param similarities: Similarity
+    :param mashup_records: Mashup records
+    :return: Best mashup
+    """
+    best_mashup = None
+    best_similarity = 0
+    index = -1
+    for i, mashup in enumerate(mashup_records):
+        if similarities[i]['similarity'] > best_similarity:
+            best_similarity = similarities[i]['similarity']
+            best_mashup = mashup
+            index = i
+    return best_mashup, index
