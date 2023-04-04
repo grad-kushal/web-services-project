@@ -1,6 +1,19 @@
 import json
 
 
+def read_data():
+    """
+    Read the data from the files
+    :return: None
+    """
+    # Read the mashup data
+    mashup_data = read_mashup_data('data/mashup.txt')
+    # Read the API data
+    api_data = read_api_data('data/api.txt')
+    # Return the data
+    return mashup_data, api_data
+
+
 def read_mashup_data(filename):
     """
     Read the mashup data from the file
@@ -18,7 +31,7 @@ def read_mashup_data(filename):
             'id': fields[0],
             'title': fields[1],
             'summary': fields[2],
-            'rating': fields[3],
+            'rating': float(fields[3]) if fields[3] else 0,
             'name': fields[4],
             'label': fields[5],
             'author': fields[6],
@@ -31,11 +44,18 @@ def read_mashup_data(filename):
             'numComments': fields[13],
             'commentsUrl': fields[14],
             'tags': fields[15].split('###'),
-            'apis': fields[16].split('###'),
+            'apis': [],
             'updated': fields[17]
         }
+        for ap in fields[16].split('###'):
+            ap_fields = ap.split('$$$')
+            if len(ap_fields) == 2:
+                mashup_record['apis'].append({
+                    'name': ap_fields[0],
+                    'url': ap_fields[1]
+                })
         mashup_records.append(mashup_record)
-    # mashup_record_json = json.dumps(mashup_records)
+    mashup_record_json = json.dumps(mashup_records)
     return mashup_records
 
 
@@ -56,7 +76,7 @@ def read_api_data(filename):
             'id': fields[0],
             'title': fields[1],
             'summary': fields[2],
-            'rating': fields[3],
+            'rating': float(fields[3]) if fields[3] else 0,
             'name': fields[4],
             'label': fields[5],
             'author': fields[6],
@@ -70,8 +90,8 @@ def read_api_data(filename):
             'remoteFeed': fields[14],
             'numComments': fields[15],
             'commentsUrl': fields[16],
-            'tags': fields[17].split('###'),
-            'category': fields[18],
+            'tags': [tag.lower() for tag in fields[17].split('###')],
+            'category': fields[18].lower(),
             'protocols': fields[19],
             'serviceEndpoint': fields[20],
             'version': fields[21],
@@ -102,7 +122,7 @@ def read_api_data(filename):
         }
 
         api_records.append(api_record)
-
+    api_records_json = json.dumps(api_records)
     return api_records
 
 
