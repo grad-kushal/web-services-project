@@ -10,6 +10,8 @@ nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 nltk.download('wordnet', quiet=True)
 
+NUMBER_OF_TOPICS = 65
+
 
 def preprocess(api_description):
     """
@@ -43,11 +45,15 @@ def train_lda_model(api_records):
     corpus = [dictionary.doc2bow(tokenized_api_description) for tokenized_api_description in tokenized_api_descriptions]
 
     # Train the LDA model
-    lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=15, passes=10)
+    lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=NUMBER_OF_TOPICS, passes=10)
 
+    topic_list = []
+    for idx, topic in lda_model.print_topics(-1):
+        topic_list.append(topic[1])
+        print('Topic: {} \nWords: {}'.format(idx, topic))
     # Print the topics
     # for idx, topic in lda_model.print_topics(-1):
-    #     print('Topic: {} \nWords: {}'.format(idx, topic))
+    #     print('Topic: {} \nWords: {}'.format(idx, topic_list[idx]))
 
     # Return the LDA model, api_dictionary, tokenized_api_descriptions, and corpus
     return lda_model, dictionary, tokenized_api_descriptions, corpus

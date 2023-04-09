@@ -4,9 +4,9 @@ import latent_dirichlet_allocation
 import parser
 from matrix_factorization import matrix_factorization_based_collaborative_filtering, calculate_root_mean_square_error
 
-
-RELEVANCE_SCORE_WEIGHT = 0.5
-POPULARITY_SCORE_WEIGHT = 0.5
+# The weights of the relevance score and the popularity score
+RELEVANCE_SCORE_WEIGHT = 0.65
+POPULARITY_SCORE_WEIGHT = 0.35
 
 
 def calculate_api_popularity_scores(api_records, mashup_records):
