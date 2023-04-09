@@ -5,6 +5,10 @@ import parser
 from matrix_factorization import matrix_factorization_based_collaborative_filtering, calculate_root_mean_square_error
 
 
+RELEVANCE_SCORE_WEIGHT = 0.5
+POPULARITY_SCORE_WEIGHT = 0.5
+
+
 def calculate_api_popularity_scores(api_records, mashup_records):
     """
     Calculate the popularity scores of APIs
@@ -57,6 +61,15 @@ def main():
 
     api_popularity_scores = calculate_api_popularity_scores(api_records, mashup_records)
     print(list(api_popularity_scores))
+
+    weighted_combined_scores = combined_relevance_scores * RELEVANCE_SCORE_WEIGHT + api_popularity_scores * POPULARITY_SCORE_WEIGHT
+
+    number_of_recommendations = 10
+    recommended_api_indices = np.argsort(weighted_combined_scores)[::-1][:number_of_recommendations]
+
+    print('Recommended APIs:')
+    for recommended_api_index in recommended_api_indices:
+        print(api_records[recommended_api_index]['name'])
 
 
 if __name__ == "__main__":
