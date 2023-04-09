@@ -14,6 +14,18 @@ def read_data():
     return mashup_data, api_data
 
 
+def get_api_index(api_name, api_records):
+    """
+    Get the index of the API in the list of APIs
+    :param api_name: The name of the API
+    :param api_records: The list of APIs
+    :return: The index of the API in the list of APIs
+    """
+    for i in range(len(api_records)):
+        if api_records[i]['name'] == api_name:
+            return i
+    return -1
+
 def read_mashup_data(filename):
     """
     Read the mashup data from the file
@@ -134,7 +146,7 @@ def create_matrix(mashup_records, api_records):
             api = api_records[j]
             mashup_apis = mashup['apis']
             if mashup_apis:
-                mashup_api_names = [a.split("$$$")[0] for a in mashup['apis']]
+                mashup_api_names = [a['name'] for a in mashup['apis']]
                 if api['name'] in mashup_api_names:
                     matrix[i][j] = 1
                     # print("Mashup: " + mashup['title'] + " API: " + api['title'])

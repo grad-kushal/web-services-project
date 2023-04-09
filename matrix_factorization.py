@@ -40,8 +40,7 @@ def calculate_root_mean_square_error(matrix, predictions):
 
 
 def main():
-    api_records = parser.read_api_data('data/api.txt')
-    mashup_records = parser.read_mashup_data('data/mashup.txt')
+    mashup_records, api_records = parser.read_data()
 
     matrix = parser.create_matrix(mashup_records, api_records)
     mashup_matrix, api_matrix = matrix_factorization_based_collaborative_filtering(matrix)

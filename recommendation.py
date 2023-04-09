@@ -1,32 +1,62 @@
 import numpy as np
 
-import lda
+import latent_dirichlet_allocation
 import parser
 from matrix_factorization import matrix_factorization_based_collaborative_filtering, calculate_root_mean_square_error
 
 
-def main():
-    api_records = parser.read_api_data('data/api.txt')
-    mashup_records = parser.read_mashup_data('data/mashup.txt')
+def calculate_api_popularity_scores(api_records, mashup_records):
+    """
+    Calculate the popularity scores of APIs
+    :param api_records: API records
+    :param mashup_records: Mashup records
+    :return: Popularity scores of APIs
+    """
+    # Initialize the popularity scores of APIs
+    api_popularity_scores = np.zeros(len(api_records))
 
-    dictionary, token, corpus, lda_model = lda.lda_train()
-    mashup_specification = "This site is a demo to show the functionality of the shopzilla.com API. Supports the US " \
-                           "and UK  API versions."
-    similarities = lda.mashup_similarity(mashup_specification, dictionary, token, lda_model, corpus)
-    best_mashup, index = lda.get_best_mashup(similarities, mashup_records)
+    # Calculate the popularity scores of APIs
+    for mashup_record in mashup_records:
+        for api in mashup_record['apis']:
+            api_index = parser.get_api_index(api['name'], api_records)
+            api_popularity_scores[api_index] += 1
+
+    # Normalize the popularity scores of APIs
+    api_popularity_scores /= len(mashup_records)
+
+    return api_popularity_scores
+
+
+def main():
+    mashup_records, api_records = parser.read_data()
+
+    lda_model, api_dictionary, tokenized_api_descriptions, api_corpus = latent_dirichlet_allocation.train_lda_model(api_records)
+    mashup_specification = "A simple application for searching and browsing Freebase movie data"
+    relevance_scores_from_lda = latent_dirichlet_allocation.get_similarities(mashup_specification, api_dictionary, tokenized_api_descriptions, lda_model, api_corpus)
+    # print(list(relevance_scores_from_lda))
 
     matrix = parser.create_matrix(mashup_records, api_records)
     mashup_matrix, api_matrix = matrix_factorization_based_collaborative_filtering(matrix)
-    predictions = np.dot(mashup_matrix, api_matrix)
-    root_mean_square_error = calculate_root_mean_square_error(matrix, predictions)
-    print('Root mean square error: ' + str(root_mean_square_error))
+    relevance_scores_from_mf = np.dot(mashup_matrix, api_matrix)
+    root_mean_square_error = calculate_root_mean_square_error(matrix, relevance_scores_from_mf)
+    # print('Root mean square error: ' + str(root_mean_square_error))
 
-    print("Best similar mashup: " + best_mashup['name'])
-    print("Best mashup index: " + str(index))
-    result = predictions[index]
-    for i in range(len(result)):
-        if result[i] > 0:
-            print(i, api_records[i]['name'], result[i])
+    mashup_descriptions = [mashup_record['description'] for mashup_record in mashup_records]
+    tokenized_mashup_descriptions = [latent_dirichlet_allocation.preprocess(mashup_description) for mashup_description in mashup_descriptions]
+    mashup_similarities = latent_dirichlet_allocation.get_similarities(mashup_specification, api_dictionary, tokenized_mashup_descriptions, lda_model, api_corpus)
+    # print(list(mashup_similarities))
+
+    similar_mashup_index = np.argmax(mashup_similarities)
+    similar_mashup = mashup_records[similar_mashup_index]
+    print(similar_mashup)
+
+    similar_mashup_relevance_scores = relevance_scores_from_mf[similar_mashup_index]
+
+    combined_relevance_scores = relevance_scores_from_lda * similar_mashup_relevance_scores
+    print(list(combined_relevance_scores))
+
+    api_popularity_scores = calculate_api_popularity_scores(api_records, mashup_records)
+    print(list(api_popularity_scores))
 
 
 if __name__ == "__main__":
